@@ -13,15 +13,16 @@ module MingleAPI
   class << self
 
     #Sets up basic authentication credentials for all the resources.
-    def authenticate(server, login, password)
-      @server    = server
-      @username  = login
-      @password  = password
-      self::Base.user = login
-      self::Base.password = password
+    def authenticate(auth)
+      @server    = auth.server
+      @username  = auth.username
+      @password  = auth.password
+      self::Base.user = auth.username
+      self::Base.password = auth.password
 
+      protocol = auth.ssl ? "https" : "http"
       resources.each do |klass|
-        klass.site = klass.site_format % "http://#{login}:#{password}@#{server}/api/v2"
+        klass.site = klass.site_format % "#{protocol}://#{auth.username}:#{auth.password}@#{auth.server}/api/v2"
       end
     end
 
