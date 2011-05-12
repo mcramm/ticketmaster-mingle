@@ -19,7 +19,7 @@ module TicketMaster::Provider
       if auth.server.blank? and auth.login.blank? and auth.password.blank?
         raise "Please provide server, login and password"
       end
-      MingleAPI.authenticate(auth.server, auth.login, auth.password)
+      MingleAPI.authenticate(auth.server, auth.username, auth.password)
     end
       # declare needed overloaded methods here
     
